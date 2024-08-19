@@ -1,48 +1,60 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import ContactsPage from "./pages/ContactsPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import Layout from "./Layout";
 import { useDispatch, useSelector } from "react-redux";
-import ContactForm from "./components/ContactForm/ContactForm";
-import SearchBox from "./components/SearchBox/SearchBox";
-import ContactList from "./components/ContactList/ContactList";
-import { addContact, deleteContact, fetchContacts } from "./redux/contactsOps.js";
-import {
-  selectContacts,
-  selectLoading,
-  selectError,
-} from "./redux/contactsSlice";
-import { changeFilter, selectNameFilter } from "./redux/filtersSlice";
-import s from "./App.module.css";
+import { getMeThunk } from "./redux/auth/operations";
+import { PrivateRoute } from "./Routes/PrivateRoute";
+import { PublucRoute } from "./Routes/PublicRoute";
+import { selectIsRefreshed } from "./redux/auth/selectors";
+import Loader from "./components/Loader/Loader";
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const filter = useSelector(selectNameFilter);
-
+  const isRefreshing = useSelector(selectIsRefreshed);
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(getMeThunk());
   }, [dispatch]);
-
-  const handleAddContact = (newContact) => {
-    dispatch(addContact(newContact));
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
-
-  const handleFilterChange = (value) => {
-    dispatch(changeFilter(value));
-  };
-
-  return (
-    <div className={s.container}>
-      <h1>Phonebook</h1>
-      <ContactForm onAddContact={handleAddContact} />
-      <SearchBox filter={filter} onFilter={handleFilterChange} />
-      {loading && <p>Loading contacts...</p>}
-      {error && <p>Error: {error}</p>}
-      <ContactList onDelete={handleDeleteContact} />
+  return isRefreshing ? (
+    <Loader />
+  ) : (
+    <div>
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute>
+                  <ContactsPage />
+                </PrivateRoute>
+              }
+            />
+          </Route>
+          <Route
+            path="login"
+            element={
+              <PublucRoute>
+                <LoginPage />
+              </PublucRoute>
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <PublucRoute>
+                <RegisterPage />
+              </PublucRoute>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };
