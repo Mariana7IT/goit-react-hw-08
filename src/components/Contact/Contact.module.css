@@ -1,0 +1,56 @@
+.contactItem {
+ display: flex;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contactItem:hover {
+border: none;
+background-color:rgb(51, 101, 117);
+color: #fff;
+box-shadow: 1px 3px 3px 1px #000;
+transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1), border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.contactDetails {
+  display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contactDetails:hover {
+  border-color: teal;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.contactSpan {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contactNumber {
+  display: block;
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
+}
+
+.deleteButton {
+background-color: #c78e43;
+color: #fff;
+padding: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteButton:hover,
+.deleteButton:focus,
+.deleteButton:active {
+  background-color: chocolate;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
