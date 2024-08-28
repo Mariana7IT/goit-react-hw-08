@@ -1,0 +1,40 @@
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+ 
+  box-shadow: 8px 8px 24px 0px rgb(34, 115, 129);
+  cursor: pointer;
+  text-align: center;
+  min-width: 80px;
+  height: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(236, 184, 44);
+  color: blueviolet;
+  margin-right: 20px;
+   display: flex;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+  &:hover,
+  &:focus {
+   border: none;
+background-color:rgb(193, 211, 216);
+color: #fff;
+box-shadow: 1px 3px 3px 1px #000;
+transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1), border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    color: black;
+  }
+}
+
+.div {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
