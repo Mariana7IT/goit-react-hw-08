@@ -7,6 +7,7 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, { resetForm }) => {
+     console.log("Submitting:", values);
     dispatch(register(values));
     resetForm();
   };
