@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
+import { logOut } from "./authOperations"; // Імпортуй logOut action
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -10,7 +11,6 @@ const contactsSlice = createSlice({
       error: null,
     },
   },
-  // Додаємо обробку зовнішніх екшенів
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, (state, action) => {
@@ -22,7 +22,7 @@ const contactsSlice = createSlice({
         state.contacts.items = action.payload;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
-        state.contacts.isLoading = false;
+        state.contacts.loading = false;
         state.contacts.error = action.payload;
       })
       .addCase(addContact.pending, (state) => {
@@ -51,6 +51,11 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.contacts.items = []; // Очищаємо контакти при logOut
+        state.contacts.error = null;
+        state.isLoading = false;
       });
   },
 });
