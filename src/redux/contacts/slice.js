@@ -10,10 +10,11 @@ const contactsSlice = createSlice({
       loading: false,
       error: null,
     },
+    isLoading: false, // Консистентний прапорець завантаження
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.pending, (state, action) => {
+      .addCase(fetchContacts.pending, (state) => {
         state.contacts.loading = true;
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
@@ -30,19 +31,19 @@ const contactsSlice = createSlice({
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.contacts.error = null;
         state.contacts.items.push(action.payload);
       })
       .addCase(addContact.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.contacts.error = action.payload;
       })
       .addCase(deleteContact.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.contacts.error = null;
         const index = state.contacts.items.findIndex(
           (contact) => contact.id === action.payload.id
         );
@@ -50,12 +51,13 @@ const contactsSlice = createSlice({
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.contacts.error = action.payload;
       })
       .addCase(logOut.fulfilled, (state) => {
         state.contacts.items = []; // Очищаємо контакти при logOut
         state.contacts.error = null;
-        state.contacts.loading = false; // Встановлюємо індикатор завантаження в false
+        state.contacts.loading = false;
+        state.isLoading = false; // Очищаємо додатковий прапорець завантаження
       });
   },
 });
