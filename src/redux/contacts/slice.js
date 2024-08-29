@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
-import { logOut } from "../auth/operations"; // Імпортуй logOut action
+import { logOut } from "../auth/operations"; 
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -10,7 +10,7 @@ const contactsSlice = createSlice({
       loading: false,
       error: null,
     },
-    isLoading: false, // Консистентний прапорець завантаження
+    isLoading: false, 
   },
   extraReducers: (builder) => {
     builder
@@ -54,10 +54,10 @@ const contactsSlice = createSlice({
         state.contacts.error = action.payload;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.contacts.items = []; // Очищаємо контакти при logOut
+        state.contacts.items = []; 
         state.contacts.error = null;
         state.contacts.loading = false;
-        state.isLoading = false; // Очищаємо додатковий прапорець завантаження
+        state.isLoading = false; 
       });
   },
 });
