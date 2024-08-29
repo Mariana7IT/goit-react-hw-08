@@ -55,7 +55,7 @@ const contactsSlice = createSlice({
       .addCase(logOut.fulfilled, (state) => {
         state.contacts.items = []; // Очищаємо контакти при logOut
         state.contacts.error = null;
-        state.isLoading = false;
+        state.contacts.loading = false; // Встановлюємо індикатор завантаження в false
       });
   },
 });
